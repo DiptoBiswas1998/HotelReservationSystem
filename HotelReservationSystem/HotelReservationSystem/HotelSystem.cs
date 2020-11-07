@@ -72,5 +72,30 @@ namespace HotelReservationSystem
             List<Hotel> sortedCheapestHotelsAsPerRating = cheapestHotels.OrderByDescending(x => x.rating).ToList();
             return sortedCheapestHotelsAsPerRating[0];
         }
+        public Dictionary<Hotel, double> CalculatePriceOfStay(DateTime[] dates)
+        {
+            double noOfWeekend = 0;
+            double noOfWeekday = 0;
+            Dictionary<Hotel, double> listOfHotelAndPrice = new Dictionary<Hotel, double>();
+            foreach (var date in dates)
+            {
+                if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
+                    noOfWeekend++;
+            }
+            TimeSpan timeSpan = dates[1].Subtract(dates[0]);
+            noOfWeekday = timeSpan.TotalDays - noOfWeekend + 1;
+            foreach (var hotel in hotelList)
+            {
+                double priceDuringStay = hotel.weekdayRatesForRegularCustomer * noOfWeekday + hotel.weekendRatesForRegularCustomer * noOfWeekend;
+                listOfHotelAndPrice.Add(hotel, priceDuringStay);
+            }
+            return listOfHotelAndPrice;
+        }
+        public Hotel GetHotelWithBestRating(DateTime[] dates)
+        {
+            Dictionary<Hotel, double> cheapestHotelAndPrice = CalculatePriceOfStay(dates);
+            var sortedListOfHotelDependingOnRating = cheapestHotelAndPrice.OrderByDescending(x => x.Key.rating);
+            return sortedListOfHotelDependingOnRating.ElementAt(0).Key;
+        }
     }
 }
