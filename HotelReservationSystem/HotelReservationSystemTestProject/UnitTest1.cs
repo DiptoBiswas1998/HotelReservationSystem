@@ -68,7 +68,7 @@ namespace HotelReservationSystemTestProject
             Hotel cheapestHotel = hotelSystem.GetCheapestHotelWithBestRating(date);
             Assert.AreEqual(5, cheapestHotel.rating);
         }
-        public void GivenWeekendAndWeekdayRateReturnBestRatedRestaurant()
+        public void GivenWeekendAndWeekdayRateReturnBestRatedHotel()
         {
             hotelSystem.AddHotel(new Hotel("Lakewood", 4, 10000, 11000));
             hotelSystem.AddHotel(new Hotel("Bridgewood", 5, 5000, 6000));
@@ -113,6 +113,17 @@ namespace HotelReservationSystemTestProject
             string[] dates = "10Dec2020,11Dec2020".Split(",");
             Hotel cheapestHotel = hotelSystem.GivenWeekendAndWeekdayRateReturnBestRatedRestaurantForRewardCustomerWithRegexValidation(dates);
             Assert.AreEqual("Ridgewood", cheapestHotel.name);
+        }
+        [TestMethod]
+        public void GivenWeekendAndWeekdayRateReturnBestRatedRestaurantForRegularCustomerWithRegexValidation()
+        {
+            RegularCustomer regularCustomer = new RegularCustomer();
+            hotelSystem.AddHotel(new Hotel("Lakewood", 4, 10000, 11000));
+            hotelSystem.AddHotel(new Hotel("Bridgewood", 5, 5000, 6000));
+            hotelSystem.AddHotel(new Hotel("Ridgewood", 3, 20000, 21000));
+            string[] dates = "10Dec2020,11Dec2020".Split(",");
+            Hotel cheapestHotel = hotelSystem.GivenWeekendAndWeekdayRateReturnBestRatedRestaurantForCustomerWithRegexValidation(dates);
+            Assert.AreEqual("Bridgewood", cheapestHotel.name);
         }
     }
 }

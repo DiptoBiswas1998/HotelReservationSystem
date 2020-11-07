@@ -78,5 +78,20 @@ namespace HotelReservationSystem
             date[1] = DateTime.Parse(dates[1]);
             return GetCheapestHotelWithBestRating(date);
         }
+        public Hotel GivenWeekendAndWeekdayRateReturnBestRatedRestaurantForCustomerWithRegexValidation(string[] dates)
+        {
+            string regexDateValid = "^[0-9]{1,2}[A-Z]{1}[a-z]{2}[2]{1}[0]{1}[2-9]{1}[0-9]{1}";
+            bool regexValidation = false;
+            foreach (string dateValid in dates)
+            {
+                regexValidation = Regex.IsMatch(dateValid, regexDateValid);
+                if (!regexValidation)
+                    throw new HotelException(HotelException.ExceptionType.INVALID_DATE, "Date is Invalid.Regex Validation Failed");
+            }
+            DateTime[] date = new DateTime[2];
+            date[0] = DateTime.Parse(dates[0]);
+            date[1] = DateTime.Parse(dates[1]);
+            return GetCheapestHotelWithBestRating(date);
+        }
     }
 }
