@@ -15,5 +15,15 @@ namespace HotelReservationSystemTestProject
             hotelSystem.AddHotel(hotel);
             Assert.AreEqual("Hyath", hotelSystem.hotelList[0].name);
         }
+        [TestMethod]
+        public void GivenHotelOptionsReturnCheapestHotel()
+        {
+            hotelSystem.AddHotel(new Hotel("Lakewood", 10000));
+            hotelSystem.AddHotel(new Hotel("Bridgewood", 5000));
+            hotelSystem.AddHotel(new Hotel("Ridgewood", 20000));
+            string[] dates = "10Dec2020,11Dec2020".Split(",");
+            Hotel cheapestHotel = hotelSystem.GetCheapestHotel(dates);
+            Assert.AreEqual("Bridgewood", cheapestHotel.name);
+        }
     }
 }
