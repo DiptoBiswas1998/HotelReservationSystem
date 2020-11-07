@@ -1,7 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using HotelReservationSystem;
 using System;
-
 namespace HotelReservationSystemTestProject
 {
     [TestClass]
@@ -80,6 +79,15 @@ namespace HotelReservationSystemTestProject
             date[1] = DateTime.Parse(dates[1]);
             Hotel cheapestHotel = hotelSystem.GetHotelWithBestRating(date);
             Assert.AreEqual(5, cheapestHotel.rating);
+        }
+        [TestMethod]
+        public void GivenRewardCustomerGetTheirRate()
+        {
+            RewardCustomer rewardCustomer = new RewardCustomer();
+            hotelSystem.AddHotel(new Hotel("Lakewood", 4, 80, 80, rewardCustomer));
+            hotelSystem.AddHotel(new Hotel("Bridgewood", 5, 110, 50, rewardCustomer));
+            hotelSystem.AddHotel(new Hotel("Ridgewood", 3, 100, 40, rewardCustomer));
+            Assert.AreEqual(80, hotelSystem.hotelList[0].weekdayRatesForRewardCustomer);
         }
     }
 }
