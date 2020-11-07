@@ -103,5 +103,16 @@ namespace HotelReservationSystemTestProject
             Hotel cheapestHotel = hotelSystem.GetCheapestHotelWithBestRating(date);
             Assert.AreEqual("Ridgewood", cheapestHotel.name);
         }
+        [TestMethod]
+        public void GivenWeekendAndWeekdayRateReturnBestRatedRestaurantForRewardCustomerWithRegexValidation()
+        {
+            RewardCustomer rewardCustomer = new RewardCustomer();
+            hotelSystem.AddHotel(new Hotel("Lakewood", 4, 80, 80, rewardCustomer));
+            hotelSystem.AddHotel(new Hotel("Bridgewood", 3, 110, 50, rewardCustomer));
+            hotelSystem.AddHotel(new Hotel("Ridgewood", 5, 100, 40, rewardCustomer));
+            string[] dates = "10Dec2020,11Dec2020".Split(",");
+            Hotel cheapestHotel = hotelSystem.GivenWeekendAndWeekdayRateReturnBestRatedRestaurantForRewardCustomerWithRegexValidation(dates);
+            Assert.AreEqual("Ridgewood", cheapestHotel.name);
+        }
     }
 }

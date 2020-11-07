@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
+
 namespace HotelReservationSystem
 {
     public class HotelSystem
@@ -60,6 +62,21 @@ namespace HotelReservationSystem
             Dictionary<Hotel, double> cheapestHotelAndPrice = CalculatePriceOfStay(dates);
             var sortedListOfHotelDependingOnRating = cheapestHotelAndPrice.OrderByDescending(x => x.Key.rating);
             return sortedListOfHotelDependingOnRating.ElementAt(0).Key;
+        }
+        public Hotel GivenWeekendAndWeekdayRateReturnBestRatedRestaurantForRewardCustomerWithRegexValidation(string[] dates)
+        {
+            string regexDateValid = "^[0-9]{1,2}[A-Z]{1}[a-z]{2}[2]{1}[0]{1}[2-9]{1}[0-9]{1}";
+            bool regexValidation = false;
+            foreach (string dateValid in dates)
+            {
+                regexValidation = Regex.IsMatch(dateValid, regexDateValid);
+                if (!regexValidation)
+                    throw new HotelException(HotelException.ExceptionType.INVALID_DATE, "Date is Invalid.Regex Validation Failed");
+            }
+            DateTime[] date = new DateTime[2];
+            date[0] = DateTime.Parse(dates[0]);
+            date[1] = DateTime.Parse(dates[1]);
+            return GetCheapestHotelWithBestRating(date);
         }
     }
 }
