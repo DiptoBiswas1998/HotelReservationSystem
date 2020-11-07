@@ -7,42 +7,40 @@ namespace HotelReservationSystem
     {
         public string name;
         public int ratesForRegularCustomer;
-        public int weekdayRatesForRegularCustomer;
-        public int weekendRatesForRegularCustomer;
-        public int weekdayRatesForRewardCustomer;
-        public int weekendRatesForRewardCustomer;
+        public int weekdayRatesForCustomer;
+        public int weekendRatesForCustomer;
         public int rating;
         public Hotel()
         {
             name = "";
-            weekdayRatesForRegularCustomer = 0;
-            weekendRatesForRegularCustomer = 0;
+            weekdayRatesForCustomer = 0;
+            weekendRatesForCustomer = 0;
             rating = 0;
         }
         public Hotel(string name, int ratesForRegularCustomer)
         {
             this.name = name;
-            weekdayRatesForRegularCustomer = ratesForRegularCustomer;
+            weekdayRatesForCustomer = ratesForRegularCustomer;
         }
         public Hotel(string name, int weekdayRatesForRegularCustomer, int weekendRatesForRegularCustomer)
         {
             this.name = name;
-            this.weekdayRatesForRegularCustomer = weekdayRatesForRegularCustomer;
-            this.weekendRatesForRegularCustomer = weekendRatesForRegularCustomer;
+            this.weekdayRatesForCustomer = weekdayRatesForRegularCustomer;
+            this.weekendRatesForCustomer = weekendRatesForRegularCustomer;
         }
         public Hotel(string hotelName, int rating, int weekdayRatesForRegularCustomer, int weekendRatesForRegularCustomer)
         {
             this.name = hotelName;
             this.rating = rating;
-            this.weekdayRatesForRegularCustomer = weekdayRatesForRegularCustomer;
-            this.weekendRatesForRegularCustomer = weekendRatesForRegularCustomer;
+            this.weekdayRatesForCustomer = weekdayRatesForRegularCustomer;
+            this.weekendRatesForCustomer = weekendRatesForRegularCustomer;
         }
         public Hotel(string hotelName, int rating, int weekdayRatesForCustomer, int weekendRatesForCustomer, RewardCustomer rewardCustomer)
         {
             this.name = hotelName;
             this.rating = rating;
-            this.weekdayRatesForRewardCustomer = weekdayRatesForCustomer;
-            this.weekendRatesForRewardCustomer = weekendRatesForCustomer;
+            this.weekdayRatesForCustomer = weekdayRatesForCustomer;
+            this.weekendRatesForCustomer = weekendRatesForCustomer;
         }
     }
 }

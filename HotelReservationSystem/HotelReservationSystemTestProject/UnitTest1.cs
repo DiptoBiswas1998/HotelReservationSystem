@@ -32,7 +32,7 @@ namespace HotelReservationSystemTestProject
             hotelSystem.AddHotel(new Hotel("Lakewood", 10000, 11000));
             hotelSystem.AddHotel(new Hotel("Bridgewood", 5000, 6000));
             hotelSystem.AddHotel(new Hotel("Ridgewood", 20000, 21000));
-            Assert.AreEqual(11000, hotelSystem.hotelList[0].weekendRatesForRegularCustomer);
+            Assert.AreEqual(11000, hotelSystem.hotelList[0].weekendRatesForCustomer);
         }
         [TestMethod]
         public void GivenWeekendAndWeekdayRateReturnCheapestHotel()
@@ -87,7 +87,21 @@ namespace HotelReservationSystemTestProject
             hotelSystem.AddHotel(new Hotel("Lakewood", 4, 80, 80, rewardCustomer));
             hotelSystem.AddHotel(new Hotel("Bridgewood", 5, 110, 50, rewardCustomer));
             hotelSystem.AddHotel(new Hotel("Ridgewood", 3, 100, 40, rewardCustomer));
-            Assert.AreEqual(80, hotelSystem.hotelList[0].weekdayRatesForRewardCustomer);
+            Assert.AreEqual(80, hotelSystem.hotelList[0].weekdayRatesForCustomer);
+        }
+        [TestMethod]
+        public void GivenWeekendAndWeekdayRateReturnBestRatedRestaurantForRewardCustomer()
+        {
+            RewardCustomer rewardCustomer = new RewardCustomer();
+            hotelSystem.AddHotel(new Hotel("Lakewood", 4, 80, 80, rewardCustomer));
+            hotelSystem.AddHotel(new Hotel("Bridgewood", 3, 110, 50, rewardCustomer));
+            hotelSystem.AddHotel(new Hotel("Ridgewood", 5, 100, 40, rewardCustomer));
+            string[] dates = "10Dec2020,11Dec2020".Split(",");
+            DateTime[] date = new DateTime[2];
+            date[0] = DateTime.Parse(dates[0]);
+            date[1] = DateTime.Parse(dates[1]);
+            Hotel cheapestHotel = hotelSystem.GetCheapestHotelWithBestRating(date);
+            Assert.AreEqual("Ridgewood", cheapestHotel.name);
         }
     }
 }
