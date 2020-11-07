@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Text;
 namespace HotelReservationSystem
 {
@@ -45,6 +46,31 @@ namespace HotelReservationSystem
                 }
             }
             return cheapestHotel;
+        }
+        public Hotel GetCheapestHotelWithBestRating(DateTime[] dates)
+        {
+            double noOfWeekend = 0;
+            double cheapestPrice = Double.MaxValue;
+            double noOfWeekday = 0;
+            List<Hotel> cheapestHotels = new List<Hotel>();
+            foreach (var date in dates)
+            {
+                if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
+                    noOfWeekend++;
+            }
+            TimeSpan timeSpan = dates[1].Subtract(dates[0]);
+            noOfWeekday = timeSpan.TotalDays - noOfWeekend;
+            foreach (var hotel in hotelList)
+            {
+                double priceDuringStay = hotel.weekdayRatesForRegularCustomer * noOfWeekday + hotel.weekendRatesForRegularCustomer * noOfWeekend;
+                if (priceDuringStay < cheapestPrice)
+                {
+                    cheapestPrice = priceDuringStay;
+                    cheapestHotels.Add(hotel);
+                }
+            }
+            List<Hotel> sortedCheapestHotelsAsPerRating = cheapestHotels.OrderByDescending(x => x.rating).ToList();
+            return sortedCheapestHotelsAsPerRating[0];
         }
     }
 }
