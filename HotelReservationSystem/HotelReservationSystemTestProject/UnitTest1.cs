@@ -3,7 +3,7 @@ using HotelReservationSystem;
 namespace HotelReservationSystemTestProject
 {
     [TestClass]
-    public class UnitTest1
+    public class UnitTest1 
     {
         HotelSystem hotelSystem = new HotelSystem();
         [TestMethod]
@@ -24,6 +24,14 @@ namespace HotelReservationSystemTestProject
             string[] dates = "10Dec2020,11Dec2020".Split(",");
             Hotel cheapestHotel = hotelSystem.GetCheapestHotel(dates);
             Assert.AreEqual("Bridgewood", cheapestHotel.name);
+        }
+        [TestMethod]
+        public void GivenWeekendAndWeekdayRatesReturnCheapestHotel()
+        {
+            hotelSystem.AddHotel(new Hotel("Lakewood", 10000, 11000));
+            hotelSystem.AddHotel(new Hotel("Bridgewood", 5000, 6000));
+            hotelSystem.AddHotel(new Hotel("Ridgewood", 20000, 21000));
+            Assert.AreEqual(11000, hotelSystem.hotelList[0].weekendRatesForRegularCustomer);
         }
     }
 }
